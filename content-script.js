@@ -38,18 +38,17 @@ chrome.storage.local.set({urls:[1,'https://pkg.go.dev/google.golang.org/api/comp
 //加载页面完成后自动运行的抓取与加载下一个链接脚本
 //2.在网页抓取数据脚本代码  
 var as=document.getElementsByTagName('a');
-console.log(as.length);
+//console.log(as.length);
 for(a in as){
-	console.log(a);
-	console.log(as[a].href);
-	console.log(/github.com/.test(as[a].href));
+	//console.log(as[a].href);
+	//console.log(/github.com/.test(as[a].href));
 	if(as[a].getAttribute('rel')=='noopener'){
 		var foundurl=/^https:\/\/[a-zA-Z_0-9-.]+\/[a-zA-Z_0-9-]+\/[a-zA-Z_0-9-]+/.exec(as[a].href);
 		if(foundurl==null){
 			foundurl=/^https:\/\/[a-zA-Z_0-9-.]+\/[a-zA-Z_0-9-]+/.exec(as[a].href);
 		}
 		if(foundurl!=null){
-			alert(foundurl);
+			//console.log(foundurl);
 			var bset=false;
 			//获取旧的downloaddata抓取数据
 			chrome.storage.local.get('downloaddata', function (di) {
@@ -66,8 +65,8 @@ for(a in as){
 		}
 	}
 	if(/https:\/\/github.com\/[a-zA-Z_0-9-]+\/[a-zA-Z_0-9-]+$/.test(as[a].href)){
-		console.log(as[a].ref);
-		alert(as[a].href);
+		//console.log(as[a].ref);
+		//console.log(as[a].href);
 		var bset=false;
 		//获取旧的downloaddata抓取数据
 		chrome.storage.local.get('downloaddata', function (di) {
@@ -89,7 +88,7 @@ chrome.storage.local.get('urls', function (items) {
     // return a default value of '' if there is no css value yet.
     if (items.urls) {
 		console.log(items.urls[0]);
-		console.log(items.urls[0]+1);
+		//alert(items.urls[0]);
 		var url=items.urls[items.urls[0]];
 		console.log(url);
 		if(items.urls[0]<items.urls.length){
@@ -100,8 +99,13 @@ chrome.storage.local.get('urls', function (items) {
 		}
     }
   });
+  
 
-//4.编写设置好上面3点后, 在浏览器打开开发者模式, 加载此扩展目录, 点击扩展图标, 点击注册脚本就开始运行
+//4.在浏览器打开开发者模式, 加载此扩展目录, 点击扩展图标, 扩展操作页面点击运行按钮,  脚本就开始运行
+
+//5. 脚本处理结束后, 在扩展页面控制台运行获取抓取结果脚本:chrome.storage.local.get('downloaddata', function (di) {if(di.downloaddata){console.log(di.downloaddata);}});
+
+//6.要再次运行, F5刷新扩展页面, 在点击运行
 
 
 

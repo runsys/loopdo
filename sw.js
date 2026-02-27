@@ -57,9 +57,9 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 
 chrome.storage.local.get('downloaddata', function (di) {
 	if(di.downloaddata){
-		alert(di.downloaddata);
+		console.log(di.downloaddata);
 	}
-})
+});
 
 
 

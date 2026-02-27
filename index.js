@@ -19,6 +19,19 @@ async function isDynamicContentScriptRegistered() {
   return scripts.some((s) => s.id === DYNAMIC_SCRIPT_ID);
 }
 
+/*
+//运行结束后,控制台运行获取抓取到的数据js代码:
+chrome.storage.local.get('downloaddata', function (di) {
+	if(di.downloaddata){
+		console.log(di.downloaddata);
+	}
+});
+*/
+
+var taskurls=[2,'https://pkg.go.dev/google.golang.org/api/compute',
+'https://pkg.go.dev/vimagination.zapto.org/gopherjs/tabs',
+'https://pkg.go.dev/gocloud.dev/mysql/awsmysql'];
+
 document
   .querySelector('#inject-programmatic')
   .addEventListener('click', async () => {
@@ -51,8 +64,6 @@ document
     const allFrames =
       document.querySelector("[name='all-frames']").value === 'yes';
     const world = document.querySelector("[name='world']").value;
-	const urls = document.querySelector("[name='urls']").value;
-	const doscript = document.querySelector("[name='doscript']").value;
 
     await chrome.scripting.registerContentScripts([
       {
@@ -67,12 +78,7 @@ document
 
     // Only open the page by default if the `matches` field hasn't been changed.
     //if (matches === 'https://example.com/*') {
-		chrome.storage.local.get('urls', function (di) {
-			if(di.urls){
-				//console.log(di.urls);
-				await chrome.tabs.create({ url:  di.urls[di.urls[0]]});
-			}
-		})
+      await chrome.tabs.create({ url:  taskurls[1]});
     //}
 
     updateUI();
@@ -173,25 +179,12 @@ window.addEventListener('message', function(event){
 // 调用函数进行测试
 sandboxEval('console.log("evaltest")');
 
-
-//设置要处理连接列表
-chrome.storage.local.set({urls:[1,'https://pkg.go.dev/google.golang.org/api/compute',
-'https://pkg.go.dev/vimagination.zapto.org/gopherjs/tabs',
-'https://pkg.go.dev/gocloud.dev/mysql/awsmysql']});
-
-/*
-//扩展页面控制台运行
-//处理后浏览器控制台获取抓取数据脚本
-chrome.storage.local.get('downloaddata', function (di) {
-	if(di.downloaddata){
-		console.log(di.downloaddata);
-	}
-});
-
 //重新抓取数据清理之前数据脚本
 chrome.storage.local.clear('downloaddata');
 
-*/
+//设置要处理链接列表
+chrome.storage.local.set({urls:taskurls});
+
 
 console.log('index.js end');
 
