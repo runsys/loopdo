@@ -26,7 +26,7 @@ chrome.storage.local.get('indexval', function (items) {
   
   
 /*
-//1.先要存储要处理链接列表,链接列表手动加在sw.js代码后面
+//1.先要存储要处理链接列表,链接列表手动加在index.js代码后面
 chrome.storage.local.set({urls:[1,'https://pkg.go.dev/google.golang.org/api/compute',
 			'https://pkg.go.dev/vimagination.zapto.org/gopherjs/tabs',
 			'https://pkg.go.dev/gocloud.dev/mysql/awsmysql']});			
@@ -83,7 +83,7 @@ for(a in as){
 		break;
 	}
 }
-//3.抓取数据后加载下一个链接
+//3.抓取数据后加载下一个链接, 一般不用修改
 chrome.storage.local.get('urls', function (items) {
     // To avoid checking items.css we could specify storage.get({css: ''}) to
     // return a default value of '' if there is no css value yet.
